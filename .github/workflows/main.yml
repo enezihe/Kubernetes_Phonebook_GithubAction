@@ -170,7 +170,7 @@ jobs:
         creds: ${{ secrets.AZURE_SERVICE_PRINCIPAL }} 
     - uses: azure/setup-kubectl@v3
       with:
-        version: 'default' # default is latest stable
+        version: 'v1.15.0' # default is latest stable
       id: install
        
     - name: 'AKS Get credentials and Deploy Manifests'
