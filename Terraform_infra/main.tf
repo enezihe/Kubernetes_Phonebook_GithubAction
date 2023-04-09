@@ -1,4 +1,10 @@
 terraform {
+  backend "azurerm" {
+    resource_group_name  = "nbt-rg-test"
+    storage_account_name = "btteststorage"
+    container_name       = "k8sblob"
+    key                  = "terraform.tfstate"
+  }
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -47,6 +53,7 @@ resource "azurerm_lb_rule" "rule1" {
   frontend_ip_configuration_name = data.azurerm_lb.lb.frontend_ip_configuration.0.name
   disable_outbound_snat = true
   probe_id = azurerm_lb_probe.probe3001.id
+  backend_address_pool_ids = [data.azurerm_lb_backend_address_pool.backAP.id]
 }
 resource "azurerm_lb_rule" "rule2" {
   loadbalancer_id                = data.azurerm_lb.lb.id
@@ -57,6 +64,13 @@ resource "azurerm_lb_rule" "rule2" {
   frontend_ip_configuration_name = data.azurerm_lb.lb.frontend_ip_configuration.0.name
   disable_outbound_snat = true 
   probe_id = azurerm_lb_probe.probe3002.id
+ 
+  backend_address_pool_ids = [data.azurerm_lb_backend_address_pool.backAP.id]
+  }
+
+  data "azurerm_lb_backend_address_pool" "backAP" {
+  name            = "kubernetes"
+  loadbalancer_id = data.azurerm_lb.lb.id
 }
 
 resource "azurerm_lb_probe" "probe3001" {
