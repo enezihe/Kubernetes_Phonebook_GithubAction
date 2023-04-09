@@ -95,6 +95,7 @@ resource "github_actions_environment_variable" "example_variable" {
   repository       = "Kubernetes_Phonebook_GithubAction"
   variable_name    = "NODERG"
   value            = azurerm_kubernetes_cluster.aks.node_resource_group
+  environment      = "production"      
 }
 
 
