@@ -1,7 +1,7 @@
 terraform {
   backend "azurerm" {
     resource_group_name  = "nbt-rg-test"
-    storage_account_name = "nbteststorage"
+    storage_account_name = "nbtteststorage"
     container_name       = "k8sblob"
     key                  = "terraform.tfstate"
   }
