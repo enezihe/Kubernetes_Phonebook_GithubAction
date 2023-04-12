@@ -6,3 +6,7 @@ variable "location" {
   default = "Canada East"
 }
 
+variable "environment" {
+  default = "production"
+
+
