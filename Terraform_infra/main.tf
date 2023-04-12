@@ -91,11 +91,31 @@ resource "azurerm_lb_probe" "probe3002" {
   name            = "probe_30002"
   port            = 30002
 }
-resource "github_actions_environment_variable" "example_variable" {
-  repository       = "Kubernetes_Phonebook_GithubAction"
-  variable_name    = "NODERG"
-  value            = azurerm_kubernetes_cluster.aks.node_resource_group
-  environment      = "production"      
+# resource "github_actions_environment_variable" "example_variable" {
+#   repository       = "Kubernetes_Phonebook_GithubAction"
+#   variable_name    = "NODERG"
+#   value            = azurerm_kubernetes_cluster.aks.node_resource_group
+#   environment      = "production"      
+# }
+resource "github_actions_environment_variable" "nodergname_var" {
+  repository    = "Kubernetes_Phonebook_GithubAction"
+  variable_name = "NODERG"
+  value         = azurerm_kubernetes_cluster.aks.node_resource_group
+  environment   = var.environment
+}
+
+resource "github_actions_environment_variable" "aksrgname_var" {
+  repository    = "Kubernetes_Phonebook_GithubAction"
+  variable_name = "AKSRG_NAME"
+  value         = azurerm_resource_group.rg3.name
+  environment   = var.environment
+}
+
+resource "github_actions_environment_variable" "aksname_var" {
+  repository    = "Kubernetes_Phonebook_GithubAction"
+  variable_name = "AKS_NAME"
+  value         = azurerm_kubernetes_cluster.aks.name
+  environment   = var.environment
 }
 
 
